@@ -13,7 +13,6 @@ module Jekyll
         MINIFY_REGEX = %r!(?<=>\n|})\s+!.freeze
 
         def generate(site)
-            puts Rainbow("WE MADE IT!!!!! OIEAJFOAJFOIAJFOAIFJEAOJFEAOIJFEAOJFEIOAJ").red
             generateXml(site.collections["whats-new"])
             @site = site
             @site.pages << persistentFeed unless file_exists?("persistentFeed.txt")
@@ -38,13 +37,16 @@ module Jekyll
             persistent_feed
         end
 
-        def pages_and_files
-            @pages_and_files ||= @site.pages + @site.static_files
+        def static_files
+            @site.static_files.select { |file| INCLUDED_EXTENSIONS.include? file.extname }
         end
 
-        # Checks if a file already exists in the site source
         def file_exists?(file_path)
             pages_and_files.any? { |p| p.url == "/#{file_path}" }
+        end
+    
+        def pages_and_files
+            @pages_and_files ||= @site.pages + @site.static_files
         end
 
 
@@ -56,6 +58,7 @@ module Jekyll
 
             # Iteratte  through collection for docs
             whats_new_collection.docs.each do |doc|
+                puts Rainbow(source_path('persistentFeed.txt')).orange
                 if !File.open(source_path('persistentFeed.txt')).each_line.any?{|line| line.include?(doc.basename)}
                     new_update_docs << doc
                 end
