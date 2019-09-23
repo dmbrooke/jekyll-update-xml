@@ -13,6 +13,7 @@ module Jekyll
         MINIFY_REGEX = %r!(?<=>\n|})\s+!.freeze
 
         def generate(site)
+            puts Rainbow("WE MADE IT!!!!! OIEAJFOAJFOIAJFOAIFJEAOJFEAOIJFEAOJFEIOAJ").red
             generateXml(site.collections["whats-new"])
             @site = site
             @site.pages << persistentFeed unless file_exists?("persistentFeed.txt")
