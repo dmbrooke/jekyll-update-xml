@@ -20,7 +20,7 @@ module Jekyll
         end
 
         def source_path(file = "feed.xml")
-            File.expand_path "/#{file}", __dir__
+            File.expand_path "./#{file}", __dir__
         end
 
         def feed
