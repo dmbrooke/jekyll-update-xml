@@ -1,7 +1,7 @@
 require "rainbow"
 require "builder"
 require "rexml/document"
-require 'open-uri'
+require "open-uri"
 
 module Jekyll
 
@@ -28,7 +28,7 @@ module Jekyll
 
             begin
                 puts Rainbow("Making a connection to staging...").yellow
-                source = open("https://docsstaging.coveo.com/DOC-5859-whats-new/3082/")
+                source = open("https://docs.coveo.com/en/3082/")
                 page_content = source.read
 
                 if page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?=')/m) != nil
