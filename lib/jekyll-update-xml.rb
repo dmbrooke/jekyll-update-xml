@@ -16,7 +16,7 @@ module Jekyll
             generateXml(site.collections["whats-new"])
         end
 
-        def source_path(file = "feed.xml")
+        def source_path(file = "feed.rss")
             File.expand_path "./#{file}", @site.source
         end
 
@@ -28,7 +28,7 @@ module Jekyll
 
             begin
                 puts Rainbow("Making a connection to staging...").yellow
-                source = open("https://docs.coveo.com/en/3082/")
+                source = open("http://docs.coveo.com/en/3082/")
                 page_content = source.read
 
                 if page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?=')/m) != nil
@@ -55,33 +55,37 @@ module Jekyll
 
             if new_update_docs.size > 0
                 puts Rainbow("Updating feed.").yellow
-                xml.instruct!
-                xml.updates do
-                    new_update_docs.each do |doc|
-                        xml.update do
-                            xml.collection doc.data["category"]
-                            xml.typeOfChange doc.data["typeOfChange"]
-                            xml.date doc.data["createdDate"]
-                            xml.content doc.content
-                            xml.links do
-                                doc.data["links"].each do |link|
-                                    xml.link link
+                xml.instruct! :xml, :version => "1.0"
+                xml.rss :version => "2.0" do
+                    xml.channel do
+                        xml.title "Whats New in Coveo Documentation"
+                        xml.description "The official RSS feed for Coveo documentation."
+                        xml.link "http://docs.coveo.com/en/3082/"
+                        new_update_docs.each do |doc|
+                            xml.item do
+                                xml.title doc.data["title"]
+                                xml.description doc.content
+                                xml.pubDate doc.data["createdDate"]
+                                xml.links do
+                                    doc.data["links"].each do |link|
+                                        xml.link link
+                                    end
                                 end
                             end
                         end
                     end
                 end
-
-                # Write the update(s) to the XML feed
-                open(source_path, 'w') do |line|
-                    line.puts @output
-                end
-
-                # Update the persisted files
-                #open(source_path('persistentFeed.txt'), 'w') do |line|
-                #    whats_new_collection.docs.each { |doc| line.puts(doc.basename)  }
-                #end
             end
+
+            # Write the update(s) to the XML feed
+            open(source_path, 'w') do |line|
+                line.puts @output
+            end
+
+            # Update the persisted files
+            #open(source_path('persistentFeed.txt'), 'w') do |line|
+            #    whats_new_collection.docs.each { |doc| line.puts(doc.basename)  }
+            #end
         end
     end
 end
