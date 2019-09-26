@@ -2,6 +2,7 @@ require "rainbow"
 require "builder"
 require "rexml/document"
 require "open-uri"
+require "uuid"
 
 module Jekyll
 
@@ -55,6 +56,8 @@ module Jekyll
 
             if new_update_docs.size > 0
                 puts Rainbow("Updating feed.").yellow
+                uuid = UUID.new
+
                 xml.instruct! :xml, :version => "1.0"
                 xml.rss :version => "2.0" do
                     xml.channel do
@@ -71,6 +74,7 @@ module Jekyll
                                         xml.link link
                                     end
                                 end
+                                xml.guid uuid.generate
                             end
                         end
                     end
