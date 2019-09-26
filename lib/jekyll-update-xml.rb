@@ -31,9 +31,9 @@ module Jekyll
                 source = open("https://docsstaging.coveo.com/DOC-5859-whats-new/3082/")
                 page_content = source.read
 
-                if page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?='>)/m) != nil
+                if page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?=')/m) != nil
                     puts Rainbow("FOUND MATCH").green
-                    test = page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?='>)/m).to_s.strip
+                    test = page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?=')/m).to_s.strip
                     whats_new_collection.docs.each do |doc|
                         if !test.each_line.any?{|line| line.include?(doc.basename)}
                             new_update_docs << doc
