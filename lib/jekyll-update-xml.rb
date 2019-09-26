@@ -65,7 +65,7 @@ module Jekyll
                             xml.item do
                                 xml.title doc.data["title"]
                                 xml.description doc.content
-                                xml.pubDate doc.data["createdDate"]
+                                xml.pubDate DateTime.parse(doc.data["createdDate"].to_s).strftime('%a, %d %b %Y %H:%M:%S %Z')
                                 xml.links do
                                     doc.data["links"].each do |link|
                                         xml.link link
@@ -81,11 +81,6 @@ module Jekyll
             open(source_path, 'w') do |line|
                 line.puts @output
             end
-
-            # Update the persisted files
-            #open(source_path('persistentFeed.txt'), 'w') do |line|
-            #    whats_new_collection.docs.each { |doc| line.puts(doc.basename)  }
-            #end
         end
     end
 end
