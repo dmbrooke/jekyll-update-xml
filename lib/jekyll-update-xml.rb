@@ -2,6 +2,7 @@ require "rainbow"
 require "builder"
 require "rexml/document"
 require "open-uri"
+require "commonmarker"
 
 module Jekyll
 
@@ -60,7 +61,7 @@ module Jekyll
                         new_update_docs.each do |doc|
                             xml.item do
                                 xml.title doc.data["title"]
-                                xml.description doc.content
+                                xml.description writeDescription(doc)#doc.content
                                 xml.pubDate DateTime.parse(doc.data["createdDate"].to_s).strftime('%a, %d %b %Y %H:%M:%S %z')
                             end
                         end
@@ -72,6 +73,15 @@ module Jekyll
             open(source_path, 'w') do |line|
                 line.puts @output
             end
+        end
+
+        def writeDescription(doc)
+            @description = doc.content
+            @description << "\n\n"
+            @description << "[More](http://localhost:4000/en/3082/#" + doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + doc.data["typeOfChange"].downcase + ")"
+            @description = CommonMarker.render_html(@description, :DEFAULT)
+
+            @description
         end
     end
 end

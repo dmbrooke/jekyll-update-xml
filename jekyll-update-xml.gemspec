@@ -11,6 +11,6 @@ Gem::Specification.new do |s|
     s.homepage = 'https://github.com/dmbrooke/jekyll-update-xml'
 
     s.add_runtime_dependency 'builder', '~> 3.2', '>= 3.2.3'
-    s.add_runtime_dependency 'uuid', '~> 2.3', '>= 2.3.9'
-    s.add_runtime_dependency "jekyll", ">= 3.7", "< 5.0"
+    s.add_runtime_dependency 'commonmarker', '~> 0.20.1'
+    s.add_runtime_dependency 'jekyll', '>= 3.7', '< 5.0'
 end

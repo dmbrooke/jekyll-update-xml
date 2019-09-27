@@ -3,8 +3,8 @@ PATH
   specs:
     jekyll-update-xml (0.0.0)
       builder (~> 3.2, >= 3.2.3)
+      commonmarker (~> 0.20.1)
       jekyll (>= 3.7, < 5.0)
-      uuid (~> 2.3, >= 2.3.9)
 
 GEM
   remote: https://rubygems.org/
@@ -13,6 +13,8 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     builder (3.2.3)
     colorator (1.1.0)
+    commonmarker (0.20.1)
+      ruby-enum (~> 0.5)
     concurrent-ruby (1.1.5)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -46,8 +48,6 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    macaddr (1.7.2)
-      systemu (~> 2.6.5)
     mercenary (0.3.6)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
@@ -56,6 +56,8 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rouge (3.11.0)
+    ruby-enum (0.7.2)
+      i18n
     ruby_dep (1.5.0)
     safe_yaml (1.0.5)
     sass (3.7.4)
@@ -63,15 +65,13 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    systemu (2.6.5)
-    uuid (2.3.9)
-      macaddr (~> 1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   builder (~> 3.2, >= 3.2.3)
+  commonmarker (~> 0.20.1)
   jekyll-update-xml!
 
 BUNDLED WITH
