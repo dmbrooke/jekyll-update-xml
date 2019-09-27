@@ -57,8 +57,9 @@ module Jekyll
                 puts Rainbow("Updating feed.").yellow
 
                 xml.instruct! :xml, :version => "1.0"
-                xml.rss :version => "2.0" do
+                xml.rss :version => "2.0", "xmlns:atom" => 'http://www.w3.org/2005/Atom' do
                     xml.channel do
+                        xml.atom :link, :href => "http://dallas.example.com/rss.xml", :rel => "self", :type => "application/rss+xml"
                         xml.title "Whats New in Coveo Documentation"
                         xml.description "The official RSS feed for Coveo documentation."
                         xml.link "http://docs.coveo.com/en/3082/"
