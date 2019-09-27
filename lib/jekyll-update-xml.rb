@@ -78,7 +78,7 @@ module Jekyll
         def writeDescription(doc)
             @description = doc.content
             @description << "\n\n"
-            @description << "[More](http://localhost:4000/en/3082/#" + doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + doc.data["typeOfChange"].downcase + ")"
+            @description << "[More](https://docs.coveo.com/en/3082/#" + doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + doc.data["typeOfChange"].downcase + ")"
             @description = CommonMarker.render_html(@description, :DEFAULT)
 
             @description
