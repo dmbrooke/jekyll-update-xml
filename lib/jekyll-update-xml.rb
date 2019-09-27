@@ -5,8 +5,7 @@ require "open-uri"
 
 module Jekyll
 
-    # Finds duplicate slugs, logs those in a file, and outputs a warning
-    # message in the console.
+    # Generates/updates the RSS feed for docs.coveo.com
     class JekyllUpdateXmlFeed < Jekyll::Generator
         safe true
         priority :lowest
@@ -27,34 +26,29 @@ module Jekyll
             xml = Builder::XmlMarkup.new(:target => @output, :indent => 1)
 
             begin
-                puts Rainbow("Making a connection to staging...").yellow
                 source = open("http://docs.coveo.com/en/3082/")
                 page_content = source.read
 
                 if page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?=')/m) != nil
-                    puts Rainbow("FOUND MATCH").green
                     test = page_content.match(/(?<=<meta name="whats-new" content=')(.|\n)*?(?=')/m).to_s.strip
                     whats_new_collection.docs.each do |doc|
                         if !test.each_line.any?{|line| line.include?(doc.basename)}
                             new_update_docs << doc
-                            puts Rainbow("Adding " + doc.data["title"]).blue
                         end
                     end
                 else
-                    puts Rainbow("DIDNT FIND MATCH").red
                     whats_new_collection.docs.each do |doc|
                         new_update_docs << doc
                     end
                 end
             rescue => exception
-                puts Rainbow("Page can not be reached.").red
                 whats_new_collection.docs.each do |doc|
                     new_update_docs << doc
                 end
             end
 
             if new_update_docs.size > 0
-                puts Rainbow("Updating feed.").yellow
+                puts Rainbow("Updating feed...").yellow
 
                 xml.instruct! :xml, :version => "1.0"
                 xml.rss :version => "2.0", "xmlns:atom" => 'http://www.w3.org/2005/Atom' do
