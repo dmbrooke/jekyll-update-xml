@@ -76,12 +76,42 @@ module Jekyll
         end
 
         def writeDescription(doc)
-            @description = doc.content
-            @description << "\n\n"
-            @description << "[More](https://docs.coveo.com/en/3082/#" + doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + doc.data["typeOfChange"].downcase + ")"
-            @description = CommonMarker.render_html(@description, :DEFAULT)
 
-            @description
+            @description = doc.content
+
+            if doc.data["links"] != nil
+                @description << "\n\n"
+
+                if doc.data["links"].size > 1
+
+                    @description << "See:\n"
+
+                    doc.data["links"].each do |link|
+                        @description << "- " + createLink(link) + "\n"
+                        puts Rainbow(createLink(link)).purple
+                    end
+                else
+                    link = doc.data["links"].at(0)
+                    @description << "See " + createLink(link) + "\n"
+                end
+
+                @description = CommonMarker.render_html(@description, :DEFAULT)
+
+                @description
+            end
+        end
+
+        def createLink(link)
+            linked_page = @site.documents.select { |current_doc| current_doc.data["slug"] == link.gsub(/\#.*/, '') }
+            @link_text = ""
+
+            if (linked_page.size > 0)
+                @link_text << "[" + linked_page.at(0).data["title"] + "](http://docs.coveo.com/en/" + link + ")"
+            else
+                @link_text << link
+            end
+
+            @link_text
         end
     end
 end
