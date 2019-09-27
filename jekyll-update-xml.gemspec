@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name        = 'jekyll-update-xml'
-    s.version     = '0.0.0'
+    s.version     = '0.1.0'
     s.date        = '2019-09-23'
     s.summary     = "Simple XML Builder"
     s.description = "A simple XML builder for a Jekyll site RSS feed."
