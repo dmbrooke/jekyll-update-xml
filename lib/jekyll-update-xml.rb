@@ -2,7 +2,6 @@ require "rainbow"
 require "builder"
 require "rexml/document"
 require "open-uri"
-require "uuid"
 
 module Jekyll
 
@@ -56,7 +55,6 @@ module Jekyll
 
             if new_update_docs.size > 0
                 puts Rainbow("Updating feed.").yellow
-                uuid = UUID.new
 
                 xml.instruct! :xml, :version => "1.0"
                 xml.rss :version => "2.0" do
@@ -68,13 +66,7 @@ module Jekyll
                             xml.item do
                                 xml.title doc.data["title"]
                                 xml.description doc.content
-                                xml.pubDate DateTime.parse(doc.data["createdDate"].to_s).strftime('%a, %d %b %Y %H:%M:%S %Z')
-                                xml.links do
-                                    doc.data["links"].each do |link|
-                                        xml.link link
-                                    end
-                                end
-                                xml.guid uuid.generate
+                                xml.pubDate DateTime.parse(doc.data["createdDate"].to_s).strftime('%a, %d %b %Y %H:%M:%S %z')
                             end
                         end
                     end
