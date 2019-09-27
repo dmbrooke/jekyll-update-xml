@@ -54,7 +54,7 @@ module Jekyll
                 xml.instruct! :xml, :version => "1.0"
                 xml.rss :version => "2.0", "xmlns:atom" => 'http://www.w3.org/2005/Atom' do
                     xml.channel do
-                        xml.atom :link, :href => "http://dallas.example.com/rss.xml", :rel => "self", :type => "application/rss+xml"
+                        xml.atom :link, :href => "https://docs.coveo.com/en/feed.rss", :rel => "self", :type => "application/rss+xml"
                         xml.title "Whats New in Coveo Documentation"
                         xml.description "The official RSS feed for Coveo documentation."
                         xml.link "http://docs.coveo.com/en/3082/"
@@ -76,9 +76,10 @@ module Jekyll
         end
 
         def writeDescription(doc)
-            @description = doc.content
+            target_doc = doc.clone
+            @description = target_doc.content
             @description << "\n\n"
-            @description << "[More](https://docs.coveo.com/en/3082/#" + doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + doc.data["typeOfChange"].downcase + ")"
+            @description << "[More](https://docs.coveo.com/en/3082/#" + target_doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + target_doc.data["typeOfChange"].downcase + ")"
             @description = CommonMarker.render_html(@description, :DEFAULT)
 
             @description
