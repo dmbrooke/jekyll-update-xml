@@ -55,7 +55,7 @@ module Jekyll
                 xml.rss :version => "2.0", "xmlns:atom" => 'http://www.w3.org/2005/Atom' do
                     xml.channel do
                         xml.atom :link, :href => "https://docs.coveo.com/en/feed.rss", :rel => "self", :type => "application/rss+xml"
-                        xml.title "What’s New in Coveo Product Documentation"
+                        xml.title "What's New in Coveo Product Documentation"
                         xml.description "The official RSS feed for Coveo documentation."
                         xml.link "http://docs.coveo.com/en/3082/"
                         new_update_docs.each do |doc|
