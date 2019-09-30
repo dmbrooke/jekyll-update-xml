@@ -55,14 +55,14 @@ module Jekyll
                 xml.rss :version => "2.0", "xmlns:atom" => 'http://www.w3.org/2005/Atom' do
                     xml.channel do
                         xml.atom :link, :href => "https://docs.coveo.com/en/feed.rss", :rel => "self", :type => "application/rss+xml"
-                        xml.title "Whats New in Coveo Documentation"
+                        xml.title "What’s New in Coveo Product Documentation"
                         xml.description "The official RSS feed for Coveo documentation."
                         xml.link "http://docs.coveo.com/en/3082/"
                         new_update_docs.each do |doc|
                             xml.item do
                                 xml.title doc.data["title"]
                                 xml.description writeDescription(doc)#doc.content
-                                xml.pubDate DateTime.parse(doc.data["createdDate"].to_s).strftime('%a, %d %b %Y %H:%M:%S %z')
+                                xml.pubDate DateTime.now.strftime('%a, %d %b %Y %H:%M:%S %z')
                             end
                         end
                     end
@@ -73,13 +73,14 @@ module Jekyll
             open(source_path, 'w') do |line|
                 line.puts @output
             end
+            puts Rainbow("Done.").green
         end
 
         def writeDescription(doc)
             @description = String.new
             @description << doc.content
             @description << "\n\n"
-            @description << "[More](https://docs.coveo.com/en/3082/#" + doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + doc.data["typeOfChange"].downcase + ")"
+            @description << "[More](https://docs.coveo.com/en/3082/#" + doc.basename.to_s.gsub(/\.md/, '') + ')'
             @description = CommonMarker.render_html(@description, :DEFAULT)
 
             @description
