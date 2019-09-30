@@ -69,17 +69,17 @@ module Jekyll
                 end
             end
 
-            # Write the update(s) to the XML feed
+            # Write the update(s) to the X  ML feed
             open(source_path, 'w') do |line|
                 line.puts @output
             end
         end
 
         def writeDescription(doc)
-            target_doc = doc.clone
-            @description = target_doc.content
+            @description = String.new
+            @description << doc.content
             @description << "\n\n"
-            @description << "[More](https://docs.coveo.com/en/3082/#" + target_doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + target_doc.data["typeOfChange"].downcase + ")"
+            @description << "[More](https://docs.coveo.com/en/3082/#" + doc.data["title"].downcase.gsub(/[\s\'\?]/, '-').gsub(/[\"\`\']/, '') + "-" + doc.data["typeOfChange"].downcase + ")"
             @description = CommonMarker.render_html(@description, :DEFAULT)
 
             @description
