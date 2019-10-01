@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jekyll-update-xml (0.1.0)
+    jekyll-update-xml (0.2.0)
       builder (~> 3.2, >= 3.2.3)
       commonmarker (~> 0.20.1)
       jekyll (>= 3.7, < 5.0)
